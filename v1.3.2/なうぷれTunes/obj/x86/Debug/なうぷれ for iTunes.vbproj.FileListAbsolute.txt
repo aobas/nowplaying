@@ -1,0 +1,18 @@
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\obj\x86\Debug\Interop.iTunesLib.dll
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\obj\x86\Debug\なうぷれ for iTunes.vbproj.ResolveComReference.cache
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\bin\Debug\Interop.iTunesLib.dll
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\bin\Debug\Newtonsoft.Json.dll
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\bin\Debug\Twitterizer2.dll
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\bin\Debug\なうぷれTunes.exe.config
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\bin\Debug\なうぷれTunes.exe
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\bin\Debug\なうぷれTunes.pdb
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\bin\Debug\なうぷれTunes.xml
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\obj\x86\Debug\なうぷれTunes.Form1.resources
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\obj\x86\Debug\なうぷれTunes.Resources.resources
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\obj\x86\Debug\なうぷれTunes.TweetDialog.resources
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\obj\x86\Debug\なうぷれTunes.exe
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\obj\x86\Debug\なうぷれTunes.xml
+D:\Documents\小物プログラム\なうぷれ for iTunes\なうぷれ for iTunes\obj\x86\Debug\なうぷれTunes.pdb
