@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<SettingClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TweetText>NowPlaying $TITLE - $ARTIST(Album:$ALBUM PlayedCount:$COUNTtimes) #nowplaying #なうぷれ</TweetText>
+  <EnableAutoTweet>false</EnableAutoTweet>
+  <EnableTweetWait>true</EnableTweetWait>
+  <EnableSameAlbumNoTweet>true</EnableSameAlbumNoTweet>
+  <TweetWaitSeconds>60</TweetWaitSeconds>
+  <CheckForUpdate>true</CheckForUpdate>
+  <ShowUpdate>true</ShowUpdate>
+</SettingClass>
