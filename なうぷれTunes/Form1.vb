@@ -19,6 +19,8 @@ Public Class Form1
     Public LastNowPlayingSong As New List(Of iTunesLib.IITTrack)
     '別スレッドから操作
     Private Delegate Sub CallDelegate()
+    'アップデート
+    Public UpdateURL As String = "http://www.jisakuroom.net/blog/"
 
     Private Sub Form1_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         If e.CloseReason = CloseReason.UserClosing Then
@@ -81,13 +83,16 @@ Public Class Form1
             CheckBox5.Enabled = False
         End If
 
-        'アイコン作ってないから....てへぺろ☆
-        NotifyIcon1.Icon = Me.Icon
+
 
         If Not itunes Is Nothing Then
             NowPlayingSong = itunes.CurrentTrack 'チェック用
+            'アイコン変更
+            NotifyIcon1.Icon = なうぷれTunes.My.Resources.なうぷれ
         Else
             NowPlayingSong = Nothing
+            'アイコン変更
+            NotifyIcon1.Icon = なうぷれTunes.My.Resources.なうぷれ白黒
         End If
 
         'イベントを登録しちゃうぞ～
@@ -128,8 +133,9 @@ Public Class Form1
         Do Until Process.GetProcessesByName("itunes").Count = 0
             Application.DoEvents()
         Loop
-        iTunesCheck.Enabled = True
         ListView1.Items.Add(Now.ToString).SubItems.Add("iTunesの終了を確認しました")
+        NotifyIcon1.Icon = なうぷれTunes.My.Resources.なうぷれ白黒
+        iTunesCheck.Enabled = True
     End Sub
     '曲変更イベント!!
     Private Sub iTunesApp_OnPlayerPlayEvent(ByVal iTrack As Object)
@@ -427,7 +433,7 @@ Public Class Form1
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        Process.Start("http://www.jisakuroom.net/")
+        Process.Start("http://www.jisakuroom.net/blog/")
     End Sub
 
     Private Sub 今すぐツイートToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles 今すぐ投稿ToolStripMenuItem.Click
@@ -470,6 +476,7 @@ Public Class Form1
                 AddHandler itunes.OnAboutToPromptUserToQuitEvent, AddressOf iTunesClosed
                 ToolStripMenuItem1.Enabled = True
                 今すぐ投稿ToolStripMenuItem.Enabled = True
+                NotifyIcon1.Icon = なうぷれTunes.My.Resources.なうぷれ
                 ListView1.Items.Add(Now.ToString).SubItems.Add("iTunesの起動を確認しました")
             Catch ex As Exception
                 ListView1.Items.Add(Now.ToString).SubItems.Add("ERROR! " + ex.Message)
@@ -487,9 +494,12 @@ Public Class Form1
             xml.Load("http://www.jisakuroom.net/updateCheck/nowplaying.xml")
             Dim ver As String
             ver = xml.SelectSingleNode("app/ver").InnerText
+            Dim mesg As String = xml.SelectSingleNode("app/mesg").InnerText
+            Dim url As String = xml.SelectSingleNode("app/url").InnerText
+            UpdateURL = url
             Dim newVer As New System.Version(ver)
-            If Not newVer = My.Application.Info.Version Then
-                e.Result = ver
+            If newVer > My.Application.Info.Version Then
+                e.Result = {mesg, newVer, url}
             Else
                 e.Result = Nothing
             End If
@@ -501,14 +511,14 @@ Public Class Form1
     Private Sub UpdateChecker_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles UpdateChecker.RunWorkerCompleted
         If Not e.Result Is Nothing And AppSettingNow.ShowUpdate = True Then
             NotifyIcon1.BalloonTipIcon = ToolTipIcon.Info
-            NotifyIcon1.BalloonTipText = "新しいバージョン(" + e.Result + ")がリリースされています!" + vbNewLine + "サイトから最新版をダウンロードしてください。"
+            NotifyIcon1.BalloonTipText = e.Result(0)
             NotifyIcon1.BalloonTipTitle = "アップデートのお知らせ"
             NotifyIcon1.ShowBalloonTip(10000)
         End If
         If Not e.Result Is Nothing Then
             ToolStripSeparator2.Visible = True
             新しいバージョンがリリースされていますToolStripMenuItem.Visible = True
-            新しいバージョンがリリースされていますToolStripMenuItem.Text = "Ver" + e.Result + "が利用可能です"
+            新しいバージョンがリリースされていますToolStripMenuItem.Text = "Ver" + e.Result(1).ToString + "が利用可能です"
         End If
 
     End Sub
@@ -522,6 +532,13 @@ Public Class Form1
     End Sub
 
     Private Sub 新しいバージョンがリリースされていますToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles 新しいバージョンがリリースされていますToolStripMenuItem.Click
-        Process.Start("http://www.jisakuroom.net/blog/")
+        Process.Start(UpdateURL)
+    End Sub
+
+    Private Sub Button5_Click(sender As System.Object, e As System.EventArgs) Handles Button5.Click
+        NowplayingCodeSetting.TextBox1.Text = TextBox1.Text
+        If NowplayingCodeSetting.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            TextBox1.Text = NowplayingCodeSetting.TextBox1.Text
+        End If
     End Sub
 End Class

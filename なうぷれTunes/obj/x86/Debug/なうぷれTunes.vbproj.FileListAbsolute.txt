@@ -34,3 +34,4 @@ D:\Documents\小物プログラム\なうぷれTunes\なうぷれTunes\obj\x86\D
 D:\Documents\小物プログラム\なうぷれTunes\なうぷれTunes\obj\x86\Debug\なうぷれTunes.TweetDialog.resources
 D:\Documents\小物プログラム\なうぷれTunes\なうぷれTunes\obj\x86\Debug\GenerateResource.read.1.tlog
 D:\Documents\小物プログラム\なうぷれTunes\なうぷれTunes\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Documents\小物プログラム\なうぷれTunes\なうぷれTunes\obj\x86\Debug\なうぷれTunes.NowplayingCodeSetting.resources
