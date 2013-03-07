@@ -93,7 +93,15 @@ Module Func
         ReturnText = ReturnText.Replace("$DISCCOUNT", NPSong.DiscCount)
         ReturnText = ReturnText.Replace("$DISCNUM", NPSong.DiscNumber)
         ReturnText = ReturnText.Replace("$TRACKNUM", NPSong.TrackNumber)
+        ReturnText = ReturnText.Replace("$NEWLINE", vbNewLine)
 
         Return ReturnText
+    End Function
+
+    Public Function CreateImage(ByVal filename As String) As System.Drawing.Image
+        Dim fs As New System.IO.FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read)
+        Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(fs)
+        fs.Close()
+        Return img
     End Function
 End Module

@@ -24,7 +24,7 @@ Public Class TweetDialog
     Private Sub TextBox1_TextChanged(sender As System.Object, e As System.EventArgs) Handles TextBox1.TextChanged
         Dim WordCount As Integer = 140 - TextBox1.Text.Length
         Label1.Text = WordCount.ToString
-        If WordCount = 140 Or 0 Then
+        If WordCount = 140 Or WordCount < 0 Then
             OK_Button.Enabled = False
         Else
             OK_Button.Enabled = True
@@ -47,8 +47,24 @@ Public Class TweetDialog
         tweettext = ReplaceMoji(itunes.CurrentTrack, tweettext)
 
         TextBox1.Text = tweettext
+        '曲情報表示
+        Label2.Text = itunes.CurrentTrack.Name
+        Label3.Text = itunes.CurrentTrack.Artist
+
+        Try
+            itunes.CurrentTrack.Artwork.Item(1).SaveArtworkToFile(GetAppPath() + "\current.png")
+            PictureBox1.Image = CreateImage(GetAppPath() + "\current.png")
+        Catch ex As Exception
+            PictureBox1.Image = Nothing
+        End Try
 
         token = Form1.tokens
+        'Enterキーで投稿
+        If Form1.AppSettingNow.SendOnEnterKey = True Then
+            TextBox1.AcceptsReturn = False
+        Else
+            TextBox1.AcceptsReturn = True
+        End If
     End Sub
 
     Private Sub Tweet_DoWork(sender As System.Object, e As System.ComponentModel.DoWorkEventArgs) Handles Tweet.DoWork

@@ -17,6 +17,7 @@ Public Class Form1
     'ツイート待機用変数
     Public NowPlayingSong As iTunesLib.IITTrack
     Public LastNowPlayingSong As New List(Of iTunesLib.IITTrack)
+    Public LastTweetedTime As DateTime
     '別スレッドから操作
     Private Delegate Sub CallDelegate()
     'アップデート
@@ -43,6 +44,7 @@ Public Class Form1
             'OAuth設定をロード
             If IO.File.Exists(GetAppPath() + "\" + "Twitter.xml") Then
                 tokens = ReadOAuthSettingFromXML(GetAppPath() + "\" + "Twitter.xml")
+
                 Label1.Text = "ステータス:認証済み"
                 Me.ShowInTaskbar = False
                 Me.Visible = False
@@ -67,22 +69,28 @@ Public Class Form1
         CheckBox3.Checked = AppSettingNow.EnableSameAlbumNoTweet
         CheckBox4.Checked = AppSettingNow.CheckForUpdate
         CheckBox5.Checked = AppSettingNow.ShowUpdate
+        CheckBox6.Checked = AppSettingNow.SendOnEnterKey
+        CheckBox7.Checked = AppSettingNow.TweetIntervelEnabled
+        NumericUpDown2.Value = AppSettingNow.TweetInterval
         'チェックボックス関連
         If CheckBox1.Checked = False Then
             CheckBox2.Enabled = False
             CheckBox3.Enabled = False
             NumericUpDown1.Enabled = False
+            NumericUpDown2.Enabled = False
+            CheckBox7.Enabled = False
         Else
             CheckBox2.Enabled = True
             CheckBox3.Enabled = True
             NumericUpDown1.Enabled = True
+            NumericUpDown2.Enabled = True
+            CheckBox7.Enabled = True
         End If
         If CheckBox4.Checked = True Then
             CheckBox5.Enabled = True
         Else
             CheckBox5.Enabled = False
         End If
-
 
 
         If Not itunes Is Nothing Then
@@ -186,6 +194,15 @@ Public Class Form1
                     End If
                 End If
             End If
+            '前回のツイートから一定時間が経過していればツイート
+            'nullと設定が無効ならなら無視
+            If Not LastTweetedTime = Nothing And AppSettingNow.TweetIntervelEnabled = True Then
+                Dim duration As TimeSpan = Now.Subtract(LastTweetedTime)
+                If duration.TotalMinutes < AppSettingNow.TweetInterval Then
+                    ListView1.Items.Add(Now.ToString).SubItems.Add("最後の自動投稿から" + duration.TotalMinutes.ToString + "分しか経過していないためツイートしませんでした")
+                    Exit Sub
+                End If
+            End If
 
             'ツイート送信
             If TweetNow.IsBusy = True Then
@@ -266,15 +283,22 @@ Public Class Form1
         CheckBox3.Checked = AppSettingNow.EnableSameAlbumNoTweet
         CheckBox4.Checked = AppSettingNow.CheckForUpdate
         CheckBox5.Checked = AppSettingNow.ShowUpdate
+        CheckBox6.Checked = AppSettingNow.SendOnEnterKey
+        CheckBox7.Checked = AppSettingNow.TweetIntervelEnabled
+        NumericUpDown2.Value = AppSettingNow.TweetInterval
         'チェックボックス関連
         If CheckBox1.Checked = False Then
             CheckBox2.Enabled = False
             CheckBox3.Enabled = False
             NumericUpDown1.Enabled = False
+            NumericUpDown2.Enabled = False
+            CheckBox7.Enabled = False
         Else
             CheckBox2.Enabled = True
             CheckBox3.Enabled = True
             NumericUpDown1.Enabled = True
+            NumericUpDown2.Enabled = True
+            CheckBox7.Enabled = True
         End If
         If CheckBox4.Checked = True Then
             CheckBox5.Enabled = True
@@ -326,6 +350,9 @@ Public Class Form1
             setting.EnableSameAlbumNoTweet = CheckBox3.Checked
             setting.CheckForUpdate = CheckBox4.Checked
             setting.ShowUpdate = CheckBox5.Checked
+            setting.SendOnEnterKey = CheckBox6.Checked
+            setting.TweetIntervelEnabled = CheckBox7.Enabled
+            setting.TweetInterval = NumericUpDown2.Value
 
             AppSettingNow = setting
 
@@ -382,13 +409,22 @@ Public Class Form1
                     End If
                 End If
             End If
-
+            '前回のツイートから一定時間が経過していればツイート
+            'nullと設定が無効ならなら無視
+            If Not LastTweetedTime = Nothing And AppSettingNow.TweetIntervelEnabled = True Then
+                Dim duration As TimeSpan = Now.Subtract(LastTweetedTime)
+                If duration.TotalMinutes < AppSettingNow.TweetInterval Then
+                    e.Result = "最後の自動投稿から" + duration.TotalMinutes.ToString + "分しか経過していないためツイートしませんでした"
+                    Exit Sub
+                End If
+            End If
             'ツイート
             Try
                 Dim tweettext As String = AppSettingNow.TweetText
                 tweettext = ReplaceMoji(itunes.CurrentTrack, tweettext)
                 Dim tweetResponse As TwitterResponse(Of TwitterStatus) = TwitterStatus.Update(tokens, tweettext)
                 e.Result = "ツイートしました:" + tweettext
+                LastTweetedTime = Now
             Catch ex As Exception
                 e.Result = "エラー発生:" + ex.Message
             End Try
@@ -407,6 +443,7 @@ Public Class Form1
             tweettext = ReplaceMoji(itunes.CurrentTrack, tweettext)
             Dim tweetResponse As TwitterResponse(Of TwitterStatus) = TwitterStatus.Update(tokens, tweettext)
             e.Result = "ツイートしました:" + tweettext
+            LastTweetedTime = Now
         Catch ex As Exception
             e.Result = "エラー発生:" + ex.Message
         End Try
@@ -460,10 +497,14 @@ Public Class Form1
             CheckBox2.Enabled = False
             CheckBox3.Enabled = False
             NumericUpDown1.Enabled = False
+            CheckBox7.Enabled = False
+            NumericUpDown2.Enabled = False
         Else
             CheckBox2.Enabled = True
             CheckBox3.Enabled = True
             NumericUpDown1.Enabled = True
+            CheckBox7.Enabled = True
+            NumericUpDown2.Enabled = True
         End If
     End Sub
 
@@ -480,6 +521,8 @@ Public Class Form1
                 ListView1.Items.Add(Now.ToString).SubItems.Add("iTunesの起動を確認しました")
             Catch ex As Exception
                 ListView1.Items.Add(Now.ToString).SubItems.Add("ERROR! " + ex.Message)
+                ListView1.Items.Add(Now.ToString).SubItems.Add("イベントハンドラの登録をリトライします")
+                itunes = Nothing
             End Try
         End If
     End Sub
@@ -536,9 +579,10 @@ Public Class Form1
     End Sub
 
     Private Sub Button5_Click(sender As System.Object, e As System.EventArgs) Handles Button5.Click
-        NowplayingCodeSetting.TextBox1.Text = TextBox1.Text
-        If NowplayingCodeSetting.ShowDialog() = Windows.Forms.DialogResult.OK Then
-            TextBox1.Text = NowplayingCodeSetting.TextBox1.Text
+        Dim EditorForm As frmNowplayingEditor = New frmNowplayingEditor
+        EditorForm.ComboBoxEditStr.Text = TextBox1.Text
+        If EditorForm.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            TextBox1.Text = EditorForm.ComboBoxEditStr.Text
         End If
     End Sub
 End Class

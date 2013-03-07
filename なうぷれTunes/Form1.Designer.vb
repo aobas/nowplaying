@@ -27,6 +27,7 @@ Partial Class Form1
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.CheckBox6 = New System.Windows.Forms.CheckBox()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -40,6 +41,9 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.NumericUpDown2 = New System.Windows.Forms.NumericUpDown()
+        Me.CheckBox7 = New System.Windows.Forms.CheckBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.CheckBox3 = New System.Windows.Forms.CheckBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -85,6 +89,7 @@ Partial Class Form1
         Me.GroupBox4.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
+        CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage5.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -106,7 +111,7 @@ Partial Class Form1
         Me.TabControl1.Location = New System.Drawing.Point(13, 13)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(470, 244)
+        Me.TabControl1.Size = New System.Drawing.Size(470, 268)
         Me.TabControl1.TabIndex = 0
         '
         'TabPage1
@@ -116,23 +121,34 @@ Partial Class Form1
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(462, 218)
+        Me.TabPage1.Size = New System.Drawing.Size(462, 242)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "基本設定"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.CheckBox6)
         Me.GroupBox2.Controls.Add(Me.Button5)
         Me.GroupBox2.Controls.Add(Me.GroupBox5)
         Me.GroupBox2.Controls.Add(Me.TextBox1)
         Me.GroupBox2.Controls.Add(Me.Label2)
         Me.GroupBox2.Location = New System.Drawing.Point(7, 83)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(449, 129)
+        Me.GroupBox2.Size = New System.Drawing.Size(449, 153)
         Me.GroupBox2.TabIndex = 1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "ツイート設定"
+        '
+        'CheckBox6
+        '
+        Me.CheckBox6.AutoSize = True
+        Me.CheckBox6.Location = New System.Drawing.Point(9, 131)
+        Me.CheckBox6.Name = "CheckBox6"
+        Me.CheckBox6.Size = New System.Drawing.Size(246, 16)
+        Me.CheckBox6.TabIndex = 6
+        Me.CheckBox6.Text = "カスタム投稿でEnterキーでの投稿を有効にする"
+        Me.CheckBox6.UseVisualStyleBackColor = True
         '
         'Button5
         '
@@ -246,13 +262,16 @@ Partial Class Form1
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(462, 218)
+        Me.TabPage3.Size = New System.Drawing.Size(462, 242)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "自動投稿設定"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.Label9)
+        Me.GroupBox3.Controls.Add(Me.NumericUpDown2)
+        Me.GroupBox3.Controls.Add(Me.CheckBox7)
         Me.GroupBox3.Controls.Add(Me.Label8)
         Me.GroupBox3.Controls.Add(Me.CheckBox3)
         Me.GroupBox3.Controls.Add(Me.Label7)
@@ -262,10 +281,38 @@ Partial Class Form1
         Me.GroupBox3.Controls.Add(Me.CheckBox1)
         Me.GroupBox3.Location = New System.Drawing.Point(7, 7)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(449, 201)
+        Me.GroupBox3.Size = New System.Drawing.Size(449, 229)
         Me.GroupBox3.TabIndex = 0
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "自動投稿機能"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(121, 151)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(17, 12)
+        Me.Label9.TabIndex = 9
+        Me.Label9.Text = "分"
+        '
+        'NumericUpDown2
+        '
+        Me.NumericUpDown2.Location = New System.Drawing.Point(26, 149)
+        Me.NumericUpDown2.Maximum = New Decimal(New Integer() {2147483647, 0, 0, 0})
+        Me.NumericUpDown2.Name = "NumericUpDown2"
+        Me.NumericUpDown2.Size = New System.Drawing.Size(89, 19)
+        Me.NumericUpDown2.TabIndex = 8
+        Me.NumericUpDown2.Value = New Decimal(New Integer() {10, 0, 0, 0})
+        '
+        'CheckBox7
+        '
+        Me.CheckBox7.AutoSize = True
+        Me.CheckBox7.Location = New System.Drawing.Point(7, 132)
+        Me.CheckBox7.Name = "CheckBox7"
+        Me.CheckBox7.Size = New System.Drawing.Size(364, 16)
+        Me.CheckBox7.TabIndex = 7
+        Me.CheckBox7.Text = "指定した時間以上前回のツイートから経過していなかったらツイートしない"
+        Me.CheckBox7.UseVisualStyleBackColor = True
         '
         'Label8
         '
@@ -281,9 +328,9 @@ Partial Class Form1
         Me.CheckBox3.AutoSize = True
         Me.CheckBox3.Location = New System.Drawing.Point(7, 109)
         Me.CheckBox3.Name = "CheckBox3"
-        Me.CheckBox3.Size = New System.Drawing.Size(306, 16)
+        Me.CheckBox3.Size = New System.Drawing.Size(318, 16)
         Me.CheckBox3.TabIndex = 5
-        Me.CheckBox3.Text = "前回再生した曲とアルバムが変わっていなかったら投稿しない"
+        Me.CheckBox3.Text = "前回再生した曲とアルバムが変わっていなかったらツイートしない"
         Me.CheckBox3.UseVisualStyleBackColor = True
         '
         'Label7
@@ -339,7 +386,7 @@ Partial Class Form1
         Me.TabPage5.Location = New System.Drawing.Point(4, 22)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(462, 218)
+        Me.TabPage5.Size = New System.Drawing.Size(462, 242)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "アップデート"
         Me.TabPage5.UseVisualStyleBackColor = True
@@ -381,7 +428,7 @@ Partial Class Form1
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(462, 218)
+        Me.TabPage2.Size = New System.Drawing.Size(462, 242)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "デバッグ情報"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -392,7 +439,7 @@ Partial Class Form1
         Me.ListView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ListView1.Location = New System.Drawing.Point(3, 3)
         Me.ListView1.Name = "ListView1"
-        Me.ListView1.Size = New System.Drawing.Size(456, 212)
+        Me.ListView1.Size = New System.Drawing.Size(456, 236)
         Me.ListView1.TabIndex = 0
         Me.ListView1.UseCompatibleStateImageBehavior = False
         Me.ListView1.View = System.Windows.Forms.View.Details
@@ -415,7 +462,7 @@ Partial Class Form1
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(462, 218)
+        Me.TabPage4.Size = New System.Drawing.Size(462, 242)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "バージョン情報"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -445,15 +492,15 @@ Partial Class Form1
         Me.Label5.AutoSize = True
         Me.Label5.Location = New System.Drawing.Point(4, 5)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(153, 36)
+        Me.Label5.Size = New System.Drawing.Size(150, 36)
         Me.Label5.TabIndex = 1
-        Me.Label5.Text = "なうぷれTunes(Version1.3.3)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "開発コードネーム:Natuki(夏希)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "制作:大石一稀(Oishi Kazuki)"
+        Me.Label5.Text = "なうぷれTunes(Version1.3.6)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "開発コードネーム:Natuki" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "制作:大石一稀(Oishi Kazuki)"
         '
         'Panel2
         '
         Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel2.Controls.Add(Me.Label6)
-        Me.Panel2.Location = New System.Drawing.Point(201, 162)
+        Me.Panel2.Location = New System.Drawing.Point(201, 175)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(253, 35)
         Me.Panel2.TabIndex = 3
@@ -470,7 +517,7 @@ Partial Class Form1
         'PictureBox1
         '
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(11, 17)
+        Me.PictureBox1.Location = New System.Drawing.Point(15, 30)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(180, 180)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -479,7 +526,7 @@ Partial Class Form1
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(310, 263)
+        Me.Button1.Location = New System.Drawing.Point(310, 287)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 1
@@ -488,7 +535,7 @@ Partial Class Form1
         '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(391, 263)
+        Me.Button3.Location = New System.Drawing.Point(391, 287)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(88, 23)
         Me.Button3.TabIndex = 2
@@ -510,51 +557,51 @@ Partial Class Form1
         '
         Me.NotifyIconMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.今すぐ投稿ToolStripMenuItem, Me.ToolStripSeparator1, Me.ToolStripMenuItem2, Me.ToolStripMenuItem3, Me.ToolStripSeparator2, Me.新しいバージョンがリリースされていますToolStripMenuItem})
         Me.NotifyIconMenu.Name = "NotifyIconMenu"
-        Me.NotifyIconMenu.Size = New System.Drawing.Size(176, 126)
+        Me.NotifyIconMenu.Size = New System.Drawing.Size(156, 126)
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Image = CType(resources.GetObject("ToolStripMenuItem1.Image"), System.Drawing.Image)
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(175, 22)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(155, 22)
         Me.ToolStripMenuItem1.Text = "カスタム投稿(&C)"
         '
         '今すぐ投稿ToolStripMenuItem
         '
         Me.今すぐ投稿ToolStripMenuItem.Image = CType(resources.GetObject("今すぐ投稿ToolStripMenuItem.Image"), System.Drawing.Image)
         Me.今すぐ投稿ToolStripMenuItem.Name = "今すぐ投稿ToolStripMenuItem"
-        Me.今すぐ投稿ToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.今すぐ投稿ToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.今すぐ投稿ToolStripMenuItem.Text = "今すぐツイート(&I)"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(172, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(152, 6)
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Image = CType(resources.GetObject("ToolStripMenuItem2.Image"), System.Drawing.Image)
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(175, 22)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(155, 22)
         Me.ToolStripMenuItem2.Text = "設定(&S)"
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(175, 22)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(155, 22)
         Me.ToolStripMenuItem3.Text = "終了(&X)"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(172, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(152, 6)
         Me.ToolStripSeparator2.Visible = False
         '
         '新しいバージョンがリリースされていますToolStripMenuItem
         '
         Me.新しいバージョンがリリースされていますToolStripMenuItem.ForeColor = System.Drawing.Color.Maroon
         Me.新しいバージョンがリリースされていますToolStripMenuItem.Name = "新しいバージョンがリリースされていますToolStripMenuItem"
-        Me.新しいバージョンがリリースされていますToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.新しいバージョンがリリースされていますToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.新しいバージョンがリリースされていますToolStripMenuItem.Text = "NewVer"
         Me.新しいバージョンがリリースされていますToolStripMenuItem.Visible = False
         '
@@ -575,7 +622,7 @@ Partial Class Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(488, 298)
+        Me.ClientSize = New System.Drawing.Size(488, 322)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Button3)
@@ -598,6 +645,7 @@ Partial Class Form1
         Me.TabPage3.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
+        CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage5.ResumeLayout(False)
         Me.GroupBox6.ResumeLayout(False)
@@ -666,5 +714,9 @@ Partial Class Form1
     Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents 新しいバージョンがリリースされていますToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Button5 As System.Windows.Forms.Button
+    Friend WithEvents CheckBox6 As System.Windows.Forms.CheckBox
+    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents NumericUpDown2 As System.Windows.Forms.NumericUpDown
+    Friend WithEvents CheckBox7 As System.Windows.Forms.CheckBox
 
 End Class

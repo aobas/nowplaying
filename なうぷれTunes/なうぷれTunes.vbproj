@@ -73,7 +73,7 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=4.0.5.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\ライブラリDLL\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -86,7 +86,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Twitterizer2, Version=2.4.0.24227, Culture=neutral, PublicKeyToken=69d1469eac671567, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\Twitterizer2.dll</HintPath>
+      <HintPath>..\..\..\ライブラリDLL\Twitterizer2.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +107,12 @@
     </Compile>
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNowplayingEditor.designer.vb">
+      <DependentUpon>frmNowplayingEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmNowplayingEditor.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Func.vb" />
@@ -142,6 +148,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNowplayingEditor.resx">
+      <DependentUpon>frmNowplayingEditor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -181,10 +190,8 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Newtonsoft.Json.dll" />
     <None Include="Resources\なうぷれ白黒.ico" />
     <None Include="Resources\なうぷれ.ico" />
-    <Content Include="Twitterizer2.dll" />
     <Content Include="なうぷれ.ico" />
   </ItemGroup>
   <ItemGroup>

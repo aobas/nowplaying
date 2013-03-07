@@ -28,7 +28,13 @@ Partial Class TweetDialog
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Tweet = New System.ComponentModel.BackgroundWorker()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TableLayoutPanel1.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TableLayoutPanel1
@@ -67,6 +73,7 @@ Partial Class TweetDialog
         '
         'TextBox1
         '
+        Me.TextBox1.AcceptsReturn = True
         Me.TextBox1.Location = New System.Drawing.Point(13, 13)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
@@ -89,6 +96,45 @@ Partial Class TweetDialog
         Me.Tweet.WorkerReportsProgress = True
         Me.Tweet.WorkerSupportsCancellation = True
         '
+        'Panel1
+        '
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.Label3)
+        Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Controls.Add(Me.PictureBox1)
+        Me.Panel1.Location = New System.Drawing.Point(13, 93)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(259, 50)
+        Me.Panel1.TabIndex = 3
+        '
+        'Label3
+        '
+        Me.Label3.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label3.Location = New System.Drawing.Point(51, 29)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(203, 14)
+        Me.Label3.TabIndex = 2
+        Me.Label3.Text = "Artist"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label2
+        '
+        Me.Label2.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Label2.Location = New System.Drawing.Point(51, 4)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(203, 23)
+        Me.Label2.TabIndex = 1
+        Me.Label2.Text = "Title"
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(41, 41)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox1.TabIndex = 0
+        Me.PictureBox1.TabStop = False
+        '
         'TweetDialog
         '
         Me.AcceptButton = Me.OK_Button
@@ -96,6 +142,7 @@ Partial Class TweetDialog
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.Cancel_Button
         Me.ClientSize = New System.Drawing.Size(436, 154)
+        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.TableLayoutPanel1)
@@ -106,6 +153,8 @@ Partial Class TweetDialog
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "投稿"
         Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.Panel1.ResumeLayout(False)
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -116,5 +165,9 @@ Partial Class TweetDialog
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Tweet As System.ComponentModel.BackgroundWorker
+    Friend WithEvents Panel1 As System.Windows.Forms.Panel
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
 
 End Class
