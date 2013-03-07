@@ -1,2 +1,0 @@
-﻿NowPlaying $TITLE - $ARTIST(Album:$ALBUM PlayedCount:$COUNTtimes) #nowplaying #なうぷれ
-NowPlaying $TITLE - $ARTIST(Album:$ALBUM PlayedCount:$COUNTtimes) #nowplaying #なうぷレレレのおじさん
