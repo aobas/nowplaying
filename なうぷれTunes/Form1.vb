@@ -194,6 +194,7 @@ Public Class Form1
                     End If
                 End If
             End If
+
             '前回のツイートから一定時間が経過していればツイート
             'nullと設定が無効ならなら無視
             If Not LastTweetedTime = Nothing And AppSettingNow.TweetIntervelEnabled = True Then
@@ -423,8 +424,12 @@ Public Class Form1
                 Dim tweettext As String = AppSettingNow.TweetText
                 tweettext = ReplaceMoji(itunes.CurrentTrack, tweettext)
                 Dim tweetResponse As TwitterResponse(Of TwitterStatus) = TwitterStatus.Update(tokens, tweettext)
-                e.Result = "ツイートしました:" + tweettext
-                LastTweetedTime = Now
+                If tweetResponse.Result = RequestResult.Success Then
+                    e.Result = "ツイートしました:" + tweettext
+                    LastTweetedTime = Now
+                Else
+                    e.Result = tweetResponse.ErrorMessage
+                End If
             Catch ex As Exception
                 e.Result = "エラー発生:" + ex.Message
             End Try
@@ -442,8 +447,12 @@ Public Class Form1
             Dim tweettext As String = AppSettingNow.TweetText
             tweettext = ReplaceMoji(itunes.CurrentTrack, tweettext)
             Dim tweetResponse As TwitterResponse(Of TwitterStatus) = TwitterStatus.Update(tokens, tweettext)
-            e.Result = "ツイートしました:" + tweettext
-            LastTweetedTime = Now
+            If tweetResponse.Result = RequestResult.Success Then
+                e.Result = "ツイートしました:" + tweettext
+                LastTweetedTime = Now
+            Else
+                e.Result = tweetResponse.ErrorMessage
+            End If
         Catch ex As Exception
             e.Result = "エラー発生:" + ex.Message
         End Try

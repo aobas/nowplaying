@@ -6,11 +6,17 @@ Imports System.Runtime.InteropServices
 Public Class TweetDialog
     Public itunes As iTunesApp
     Public token As OAuthTokens
+    Public PostWithPic As Boolean
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         If Tweet.IsBusy = True Then
             MessageBox.Show("ツイート送信スレッドが終了されていません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
+        End If
+        If CheckBox1.Checked = True Then
+            PostWithPic = True
+        Else
+            PostWithPic = False
         End If
         Tweet.RunWorkerAsync(TextBox1.Text)
         Me.Enabled = False
@@ -70,7 +76,17 @@ Public Class TweetDialog
     Private Sub Tweet_DoWork(sender As System.Object, e As System.ComponentModel.DoWorkEventArgs) Handles Tweet.DoWork
         Try
             Dim tweettext As String = CType(e.Argument, String)
-            Dim tweetResponse As TwitterResponse(Of TwitterStatus) = TwitterStatus.Update(token, tweettext)
+            If PostWithPic = True Then
+                Dim tweetResponse As TwitterResponse(Of TwitterStatus) = TwitterStatus.UpdateWithMedia(token, tweettext, GetAppPath() + "\current.png")
+                If Not tweetResponse.Result = RequestResult.Success Then
+                    e.Result = tweetResponse.ErrorMessage
+                End If
+            Else
+                Dim tweetResponse As TwitterResponse(Of TwitterStatus) = TwitterStatus.Update(token, tweettext)
+                If Not tweetResponse.Result = RequestResult.Success Then
+                    e.Result = tweetResponse.ErrorMessage
+                End If
+            End If
         Catch ex As Exception
             e.Result = ex.Message
         End Try

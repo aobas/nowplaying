@@ -631,7 +631,7 @@ Partial Class Form1
         Me.MaximizeBox = False
         Me.Name = "Form1"
         Me.Opacity = 0.0R
-        Me.Text = "なうぷれTunes"
+        Me.Text = " "
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)

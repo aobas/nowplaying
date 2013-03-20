@@ -1,153 +1,28 @@
 ﻿
-'日付入りコメントや参考URLは、削除してください
+' 10:25 2013/03/19 作成
 
-'【未】'Control + Enter で、改行を挿入、メイン側で、vbNewLine を ｢$NEWLINE｣ に置換
-'      ※ "$NEWLINE" を 改行 に 置換するタイミングに気を付けて下さい
-'
-'【未】マルチライン対応テキストボックス.Text = テキストボックス.Text.Replace("$NEWLINE", vbNewLine)
-'      ◆writeEditData()の「後」で置換して、メイン側に渡す
-'
-'【未】control + enter  で投稿しないように、if 文で分岐
-'
-'【未】AppSettingEmbeddedXML() は、カズキ君が作った物（シリアライズされた物）を使う
+''=======================================================================================================
 
+'tweettextFromEditorToMain = EditBOX.Text.Replace(vbNewLine, "$NEWLINE")
+''■「基本設定」側へは、置き換え文字 使用
 
-'Private Sub ○○_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles ●●.KeyDown
-'   ''■メイン側に追加 ''■control + enter  で投稿しないように、if 文で分岐
-'
-'    ''http://dobon.net/vb/dotnet/control/keyevent.html
-'    'ControlキーとEnterが押された時
-'    If (Control.ModifierKeys And Keys.Control) And (e.KeyCode = Keys.Enter) Then
-'            ''MessageBox.Show("ControlキーとEnterが押されました。", "確認", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-'                ○○.Text = ○○.Text + vbNewLine
-'    Else
-'           ''投稿実行
-'    End If
-'End Sub
+' AppSettingEmbeddedXML() ← シリアライズ使用しました ＆「基本設定」側に反映
+
+''=======================================================================================================
+
+' 置き換え文字または良く使う文字を追加したかったら、承ります。
+' 解像度の低いマシンでも綺麗に表示されるようにします。
 
 
-'  ユーザー関数の「追加」 や「差し替え」は、ソースコードの最後に固めておきました。念のため、そちらをコピペしてください。
+'イベントハンドラの関連付け が 「複数回」実行される事を避けて下さい。
+'For i = 0 To Me.replaceButtons.Length - 1
+'    AddHandler Me.replaceButtons(i).Click, _
+'        AddressOf Me.replaceButtons_Click
+'Next i
 
 
-'Private Sub ComboBoxEditStr_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles ComboBoxEditStr.KeyDown
-'    ''■2013.02.09 関数ごと追加
-'    ''http://dobon.net/vb/dotnet/control/keyevent.html
-'
-'    'ControlキーとEnterが押された時
-'    If (Control.ModifierKeys And Keys.Control) Then
-'        If (e.KeyCode = Keys.Enter) Then
-'            ''MessageBox.Show("ControlキーとEnterが押されました。", "確認", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-'            InsertStrIntoComboBox("$NEWLINE")
-'        End If
-'    End If
-'End Sub
-
-
-
-'' Private Sub frmNowplayingEditor_Load()内で・・・
-
-'｢$NEWLINE｣ボタンを追加
-
-'Me.replaceButtons = New System.Windows.Forms.Button(30) {} ''■添え字を30に変更
-'' ・・・
-'Me.replaceButtons(30) = Me.rButton31 ''■添え字を３０に、Me.rButton31 と関連付け
-
-
-
-''バグFIX
-'    Dim ListChangeFlg As Boolean  ''■追加 2012.09.18  グローバル変数宣言
-
-
-
-''バグFIX１
-'Private Sub frmNowplayingEditor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load {
-'   Try
-'        ''LastSelectionStart = ComboBoxEditStr.Text.Length ''■コメント化 2012.09.14
-'
-'           ・・・
-'
-'           LastSelectionStart = ComboBoxEditStr.Text.Length ''■Try 直後からCatch 直前へ移動 ''2012.09.14
-'           ListChangeFlg = False  ''■2012.09.18 追加
-'           ComboKeepStr = ComboBoxEditStr.Text  ''■2012.09.18 追加
-'
-'   Catch ex As Exception
-'           ・・・
-'   End Try
-'
-
-
-''バグFIX２
-
-'Private Sub InsertStrIntoComboBox(ByVal str As String)
-'    ''■2012.09.18 関数ごと差し替え
-
-'    ComboKeepStr = ComboBoxEditStr.Text
-
-'    Dim ComboStr As String
-'    ComboStr = ComboBoxEditStr.Text
-
-'    If ComboStr.Length >= (LastSelectionStart + LastSelectionLength) And ComboStr <> "" Then
-'        ComboBoxEditStr.Text = ComboStr.Substring(0, LastSelectionStart) + _
-'            ComboStr.Substring(LastSelectionStart + LastSelectionLength, _
-'            ComboStr.Length - (LastSelectionStart + LastSelectionLength))
-'    End If
-
-'    ComboStr = ComboBoxEditStr.Text
-
-'    If ListChangeFlg = True Then
-'        ComboBoxEditStr.Text = ComboBoxEditStr.Text + str
-'        LastSelectionStart = ComboBoxEditStr.Text.Length
-'    ElseIf ComboStr <> "" Then  ''コメント化 2012.09.14 ''And LastSelectionStart <> 0
-'        ComboBoxEditStr.Text = ComboStr.Insert(LastSelectionStart, str)
-'        LastSelectionStart = LastSelectionStart + str.Length ''連続して挿入する場合を考慮
-'    Else
-'        ComboBoxEditStr.Text = str
-'        LastSelectionStart = str.Length ''連続して挿入する場合を考慮
-'    End If
-
-'    LastSelectionLength = 0 ''挿入後 初期化
-
-'    ComboBoxEditStr.Select(LastSelectionStart, LastSelectionLength) ''コンボボックスの幅が小さいので現在入力中の位置にカーソルを移動
-
-'    ListChangeFlg = False
-'End Sub
-
-
-
-''バグFIX３
-'Private Sub ComboBoxEditStr_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles ComboBoxEditStr.SelectedIndexChanged
-'    ''■2013.02.09 関数ごと差し替え
-
-'    LastSelectionStart = 0
-'    LastSelectionLength = 0
-
-'    ListChangeFlg = True
-
-'    ''http://dobon.net/vb/dotnet/system/modifierkeys.html
-
-'    If (Control.ModifierKeys And Keys.Control) = Keys.Control Then
-'        Dim myIDX As Integer = (ComboBoxEditStr.SelectedIndex)
-
-'        If myIDX <> -1 Then
-'            If MessageBox.Show("以下のデータを削除しますか？" + vbNewLine + vbNewLine + ComboBoxEditStr.Text, "確認", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
-'                ComboBoxEditStr.Items.RemoveAt(myIDX)  ''◆Ctrlキーを押しながら、リストをクリックする → 削除
-'                writeEditData()
-'            End If
-'        End If
-'    End If
-'End Sub
-
-
-
-''バグFIX４
-'Private Sub ComboBoxEditStr_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles ComboBoxEditStr.MouseMove
-'    LastSelectionStart = ComboBoxEditStr.SelectionStart
-'    LastSelectionLength = ComboBoxEditStr.SelectionLength
-
-'    ListChangeFlg = False  ''■2012.09.18 追加
-'End Sub
-
-
+' 「ＯＫ」ボタン で 基本設定側と「ツイートする文の形式」をやり取り
+' フォーム ロード  で 「ツイートする文の形式」をメインから受けとる
 
 
 Public Class frmNowplayingEditor
@@ -161,14 +36,17 @@ Public Class frmNowplayingEditor
     End Sub
     'End Class
 
-    Dim ListChangeFlg As Boolean  ''■追加 2012.09.18  グローバル変数宣言
+    Public tweettextFromEditorToMain As String
+    Public tweettextFromMainToEditor As String
+
+    Dim ListChangeFlg As Boolean
 
     Dim ToolTip1 As ToolTip
 
     Dim LastSelectionStart As Integer
     Dim LastSelectionLength As Integer
 
-    Dim ComboKeepStr As String ''セットボタンを押す前のデータを退避
+    Dim TextBoxKeepStr As String ''ＯＫボタンを押す前のデータを退避
 
     ''http://dobon.net/vb/dotnet/control/buttonarray.html
 
@@ -179,10 +57,11 @@ Public Class frmNowplayingEditor
     ''フォームのLoadイベントハンドラ
     Private Sub frmNowplayingEditor_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Try
-            ''LastSelectionStart = ComboBoxEditStr.Text.Length ''■コメント化 2012.09.14
+
+            Me.Text = "編集"
 
             'ボタンコントロール配列の作成
-            Me.replaceButtons = New System.Windows.Forms.Button(30) {} ''■添え字を30に変更
+            Me.replaceButtons = New System.Windows.Forms.Button(30) {}
 
             'ボタンコントロールの配列にすでに作成されているインスタンスを代入
             Me.replaceButtons(0) = Me.rButton1
@@ -215,13 +94,9 @@ Public Class frmNowplayingEditor
             Me.replaceButtons(27) = Me.rButton28
             Me.replaceButtons(28) = Me.rButton29
             Me.replaceButtons(29) = Me.rButton30
-            Me.replaceButtons(30) = Me.rButton31 ''■添え字を３０に、Me.rButton31 と関連付け
+            Me.replaceButtons(30) = Me.rButton31
 
             Dim i As Integer
-
-            'または、次のようにもできる
-            'Me.replaceButtons = New System.Windows.Forms.Button() _
-            '    {Me.Button1, Me.Button2, Me.Button3, Me.Button4, Me.Button5}
 
 
             ''http://dobon.net/vb/dotnet/control/showtooltip.html
@@ -239,7 +114,7 @@ Public Class frmNowplayingEditor
             'フォームがアクティブでない時でもToolTipを表示する
             ToolTip1.ShowAlways = True
 
-            'Button1～Button13にToolTipが表示されるようにする
+            'Button1～Button31にToolTipが表示されるようにする
             For i = 0 To Me.replaceButtons.Length - 1
                 Dim tempStr As String
 
@@ -263,15 +138,24 @@ Public Class frmNowplayingEditor
 
             readEditData()
 
+            ''tweettextFromMainToEditor = 「基本設定」の TextBox1.text ''■
+            tweettextFromMainToEditor = Form1.TextBox1.Text()
+
+            EditBOX.Text = tweettextFromMainToEditor ''■「基本設定」側から、「ツイートする文字の設定」を読み込む
+            EditBOX.Text = EditBOX.Text.Replace("$NEWLINE", vbNewLine)
+
             If Me.ComboBoxEditStr.Items.Count = 0 Then
                 Me.ComboBoxEditStr.Text = "NowPlaying $TITLE - $ARTIST(Album:$ALBUM) #nowplaying"
             Else
-                Me.ComboBoxEditStr.SelectedIndex = 0
+                If tweettextFromMainToEditor = "" Then
+                    Me.ComboBoxEditStr.SelectedIndex = 0
+                    EditBOX.Text = Me.ComboBoxEditStr.Text.Replace("$NEWLINE", vbNewLine)
+                End If
             End If
 
-            LastSelectionStart = ComboBoxEditStr.Text.Length ''■Try 直後からCatch 直前へ移動 ''2012.09.14
-            ListChangeFlg = False  ''■2012.09.18 追加
-            ComboKeepStr = ComboBoxEditStr.Text  ''■2012.09.18 追加
+            LastSelectionStart = EditBOX.Text.Length
+            ListChangeFlg = False
+            TextBoxKeepStr = EditBOX.Text
 
         Catch ex As Exception
             MessageBox.Show("エラーが発生しました" + vbNewLine + ex.ToString, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -289,6 +173,9 @@ Public Class frmNowplayingEditor
 
         If tempStr.Contains(" ") = True Then
             tempStr = tempStr.Substring(0, tempStr.IndexOf(" ", 0))
+            If tempStr = "$NEWLINE" Then
+                tempStr = vbNewLine
+            End If
         Else
             ''半角スペースが含まれない場合は文字列全体
             If tempStr = "space" Then
@@ -302,11 +189,16 @@ Public Class frmNowplayingEditor
     End Sub
 
     Private Sub ButtonQuit_Click(sender As System.Object, e As System.EventArgs) Handles ButtonQuit.Click
-        If (ComboKeepStr <> ComboBoxEditStr.Text Or Me.ComboBoxEditStr.Items.Count = 0) And ComboBoxEditStr.Text <> "" Then
-            If MessageBox.Show("最後に編集したデータを保存しますか？", "通知", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+        If (TextBoxKeepStr <> EditBOX.Text Or Me.ComboBoxEditStr.Items.Count = 0) And EditBOX.Text <> "" Then
+            If MessageBox.Show("最後に編集したデータを保存しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
                 Dim ComboStr As String
-                ComboStr = ComboBoxEditStr.Text
+
+                ComboStr = EditBOX.Text.Replace(vbNewLine, "$NEWLINE")
+                tweettextFromEditorToMain = EditBOX.Text.Replace(vbNewLine, "$NEWLINE")  ''■メイン側へは、置き換え文字 使用
+
+                ''AppSettingEmbeddedXML() ''■AppSetting.xmlは、置き換え文字必須！  一度改行が入ると次回以降保存ができない。
+                Form1.TextBox1.Text = tweettextFromEditorToMain
 
                 ''http://www.itlab51.com/?page_id=46
                 Dim myIDX As Integer = (ComboBoxEditStr.Items.IndexOf(ComboStr))
@@ -319,40 +211,47 @@ Public Class frmNowplayingEditor
 
                 ComboBoxEditStr.Text = ComboStr
 
-                ComboKeepStr = ComboStr
+                TextBoxKeepStr = ComboStr.Replace("$NEWLINE", vbNewLine)
 
                 writeEditData()
-                AppSettingEmbeddedXML() ''■コンボボックスの文字をAppSetting.xmlに埋め込む   ■カズキ君が作った物（シリアライズされた物）を使う
             End If
         End If
+
+        'Application.Exit()
+        Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.Close()
     End Sub
 
     Private Sub ButtonDefault_Click(sender As System.Object, e As System.EventArgs) Handles ButtonDefault.Click
-        ComboBoxEditStr.Text = "NowPlaying $TITLE - $ARTIST(Album:$ALBUM) #nowplaying"
+        EditBOX.Text = "NowPlaying $TITLE - $ARTIST(Album:$ALBUM) #nowplaying"
     End Sub
 
     Private Sub ButtonClear_Click(sender As System.Object, e As System.EventArgs) Handles ButtonClear.Click
-        ComboBoxEditStr.Text = ""
+        EditBOX.Text = ""
     End Sub
 
-    Private Sub ComboBoxEditStr_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles ComboBoxEditStr.MouseMove
-        LastSelectionStart = ComboBoxEditStr.SelectionStart
-        LastSelectionLength = ComboBoxEditStr.SelectionLength
+    Private Sub EditBOX_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs) Handles EditBOX.MouseMove
+        LastSelectionStart = EditBOX.SelectionStart
+        LastSelectionLength = EditBOX.SelectionLength
 
-        ListChangeFlg = False  ''■2012.09.18 追加
+        ListChangeFlg = False
     End Sub
 
     Private Sub ButtonSet_Click(sender As System.Object, e As System.EventArgs) Handles ButtonSet.Click
-        If ComboBoxEditStr.Text = "" Then
+        If EditBOX.Text = "" Then
             MessageBox.Show("テキストを設定してください", "通知")
-            ComboBoxEditStr.Select()
+            EditBOX.Select()
         Else
             ''http://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q1064926230
             ''FindStringExact()は、使わない
 
             Dim ComboStr As String
-            ComboStr = ComboBoxEditStr.Text
+
+            ComboStr = EditBOX.Text.Replace(vbNewLine, "$NEWLINE")
+            tweettextFromEditorToMain = EditBOX.Text.Replace(vbNewLine, "$NEWLINE")  ''■メイン側へは、置き換え文字 使用
+
+            ''AppSettingEmbeddedXML() ''■AppSetting.xmlは、置き換え文字必須！  一度改行が入ると次回以降保存ができない。
+            Form1.TextBox1.Text = tweettextFromEditorToMain
 
             ''http://www.itlab51.com/?page_id=46
             Dim myIDX As Integer = (ComboBoxEditStr.Items.IndexOf(ComboStr))
@@ -362,25 +261,27 @@ Public Class frmNowplayingEditor
             End If
 
             ComboBoxEditStr.Items.Insert(0, ComboStr) ''最後にセットしたデータをコンボボックスの一番上へ
+            ComboBoxEditStr.SelectedIndex = 0
 
-            ComboBoxEditStr.Text = ComboStr
-            ComboKeepStr = ComboStr
+            TextBoxKeepStr = ComboStr.Replace("$NEWLINE", vbNewLine)
 
             writeEditData()
 
-            ''○○.Text = ComboBoxEditStr.Text.Replace("$NEWLINE", vbNewLine) ''◆writeEditData()の後で置換して、メイン側に渡す
-
-            AppSettingEmbeddedXML() ''コンボボックスの文字をAppSetting.xmlに埋め込む   ■カズキ君が作った物（シリアライズされた物）を使う
+            'Application.Exit()
+            Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
+            Me.Close()
         End If
     End Sub
 
     Private Sub ButtonUNDO_Click(sender As System.Object, e As System.EventArgs) Handles ButtonUNDO.Click
-        ComboBoxEditStr.Text = ComboKeepStr
+        EditBOX.Text = TextBoxKeepStr
 
-        LastSelectionStart = ComboKeepStr.Length ''UNDO後 初期化
+        LastSelectionStart = TextBoxKeepStr.Length ''UNDO後 初期化
         LastSelectionLength = 0 ''UNDO後 初期化
 
-        ComboBoxEditStr.Select(LastSelectionStart, LastSelectionLength) ''コンボボックスの幅が小さいので現在入力中の位置にカーソルを移動
+        EditBOX.Select(LastSelectionStart, LastSelectionLength) '現在入力中の位置にカーソルを移動
+        EditBOX.ScrollToCaret() ''現在入力中の位置にスクロール
+
     End Sub
 
     Function GetAppPath() As String
@@ -429,48 +330,36 @@ Public Class frmNowplayingEditor
 
     End Sub
 
-
-    Sub AppSettingEmbeddedXML()
-        Dim myPath As String = GetAppPath() + "\" + "AppSetting.xml"
-        Dim myTweetText As String
-
-        myTweetText = ""
-
-        If IO.File.Exists(myPath) Then
-            Dim TextFile As IO.StreamReader
-            Dim Line As String
-
-            TextFile = New IO.StreamReader(myPath, System.Text.Encoding.UTF8)
-            Line = TextFile.ReadLine()
-            Do While Line <> Nothing
-                Dim startIDX As Integer
-                Dim endIDX As Integer
-
-                startIDX = Line.IndexOf("<TweetText>")
-                endIDX = Line.IndexOf("</TweetText>")
-
-                If startIDX <> -1 And endIDX <> -1 Then
-                    myTweetText = myTweetText + Line.Substring(0, startIDX) + _
-                        "<TweetText>" + Me.ComboBoxEditStr.Text + "</TweetText>" + _
-                    Line.Substring(endIDX + "</TweetText>".Length, Line.Length - (endIDX + "</TweetText>".Length))
-                Else
-                    myTweetText = myTweetText + Line
-                End If
-                myTweetText = myTweetText + ControlChars.NewLine
-                Line = TextFile.ReadLine()
-            Loop
-            TextFile.Close()
-        End If
-
-        Dim WS As IO.StreamWriter
-        WS = New IO.StreamWriter( _
-              New IO.FileStream(myPath, IO.FileMode.Create)) ''Create；ファイルを新規作成。すでに存在する場合は上書き
-        WS.Write(myTweetText)             '出力データ
-        WS.Close()
+    Sub WriteAppSettingToXML(ByVal setting As SettingClass, ByVal filePath As String)
+        Dim serializer As New System.Xml.Serialization.XmlSerializer(GetType(SettingClass))
+        'ファイルを開く
+        Dim fs As New System.IO.FileStream(filePath, System.IO.FileMode.Create)
+        'シリアル化し、XMLファイルに保存する
+        serializer.Serialize(fs, setting)
+        '閉じる
+        fs.Close()
     End Sub
 
+    'Sub AppSettingEmbeddedXML()
+    '    Try
+    '        ''保存するクラス(SampleClass)のインスタンスを作成
+    '        Dim setting As New SettingClass
+    '        setting.TweetText = tweettextFromEditorToMain ''■
+
+    '        AppSettingNow = setting
+
+    '        '' 「基本設定」の TextBox1.textに戻す
+    '        Form1.TextBox1.Text = tweettextFromEditorToMain ''■
+
+    '        WriteAppSettingToXML(setting, GetAppPath() + "\" + "AppSetting.xml")
+
+    '    Catch ex As Exception
+    '        MessageBox.Show("エラーが発生しました" + vbNewLine + ex.ToString, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '    End Try
+    'End Sub
+
     Private Sub ButtonListItemClear_Click(sender As System.Object, e As System.EventArgs) Handles ButtonListItemClear.Click
-        If MessageBox.Show("コンボボックスの履歴をすべて削除しますか？", "通知", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+        If MessageBox.Show("履歴をすべて削除しますか？", "確認", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
             Me.ComboBoxEditStr.Items.Clear()
 
             Dim myPath As String = GetAppPath() + "\" + "EditData.txt"
@@ -486,67 +375,48 @@ Public Class frmNowplayingEditor
         End If
     End Sub
 
-    ''その他参考サイト
-    ''http://blog.livedoor.jp/akf0/archives/51315453.html#more 右クリックメニュー
-
-    ''http://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q1331025278
-    ''http://dobon.net/vb/dotnet/control/showtooltip.html
-    ''http://blogs.yahoo.co.jp/schmitt_jun/14588949.html
-    ''http://natchan-develop.seesaa.net/article/17967829.html
-    ''http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=9634&forum=7
-    ''http://www.geocities.jp/hatanero/indexer.html
-    ''http://natchan-develop.seesaa.net/archives/200605-1.html
-    ''http://dobon.net/vb/dotnet/control/index.html
-    ''http://shinshu.fm/MHz/88.44/a11462/
-    ''http://www3.plala.or.jp/sardonyx/smart/vb/index.html
-
-    'Private Sub ComboBoxEditStr_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles ComboBoxEditStr.SelectedIndexChanged
-    '    ComboBoxEditStr.Text = ComboBoxEditStr.SelectedValue
-    'End Sub
-
-    ''========================================================================================================
-
     Private Sub InsertStrIntoComboBox(ByVal str As String)
-        ''■2012.09.18 関数ごと差し替え
+        TextBoxKeepStr = EditBOX.Text
 
-        ComboKeepStr = ComboBoxEditStr.Text
+        Dim TextBoxStr As String
+        TextBoxStr = EditBOX.Text
 
-        Dim ComboStr As String
-        ComboStr = ComboBoxEditStr.Text
-
-        If ComboStr.Length >= (LastSelectionStart + LastSelectionLength) And ComboStr <> "" Then
-            ComboBoxEditStr.Text = ComboStr.Substring(0, LastSelectionStart) + _
-                ComboStr.Substring(LastSelectionStart + LastSelectionLength, _
-                ComboStr.Length - (LastSelectionStart + LastSelectionLength))
+        If TextBoxStr.Length >= (LastSelectionStart + LastSelectionLength) And TextBoxStr <> "" Then
+            EditBOX.Text = TextBoxStr.Substring(0, LastSelectionStart) + _
+                TextBoxStr.Substring(LastSelectionStart + LastSelectionLength, _
+                TextBoxStr.Length - (LastSelectionStart + LastSelectionLength))
         End If
 
-        ComboStr = ComboBoxEditStr.Text
+        TextBoxStr = EditBOX.Text
 
         If ListChangeFlg = True Then
-            ComboBoxEditStr.Text = ComboBoxEditStr.Text + str
-            LastSelectionStart = ComboBoxEditStr.Text.Length
-        ElseIf ComboStr <> "" Then  ''コメント化 2012.09.14 ''And LastSelectionStart <> 0
-            ComboBoxEditStr.Text = ComboStr.Insert(LastSelectionStart, str)
+            EditBOX.Text = EditBOX.Text + str
+            LastSelectionStart = EditBOX.Text.Length
+        ElseIf TextBoxStr <> "" Then
+            EditBOX.Text = TextBoxStr.Insert(LastSelectionStart, str)
             LastSelectionStart = LastSelectionStart + str.Length ''連続して挿入する場合を考慮
         Else
-            ComboBoxEditStr.Text = str
+            EditBOX.Text = str
             LastSelectionStart = str.Length ''連続して挿入する場合を考慮
         End If
 
         LastSelectionLength = 0 ''挿入後 初期化
 
-        ComboBoxEditStr.Select(LastSelectionStart, LastSelectionLength) ''コンボボックスの幅が小さいので現在入力中の位置にカーソルを移動
+        EditBOX.Focus()
+        EditBOX.Select(LastSelectionStart, LastSelectionLength) ''現在入力中の位置にカーソルを移動
+        EditBOX.ScrollToCaret() ''現在入力中の位置にスクロール
 
         ListChangeFlg = False
     End Sub
 
     Private Sub ComboBoxEditStr_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles ComboBoxEditStr.SelectedIndexChanged
-        ''■2013.02.09 関数ごと差し替え  ''■隠し機能
-
         LastSelectionStart = 0
         LastSelectionLength = 0
 
         ListChangeFlg = True
+
+        EditBOX.Text = ComboBoxEditStr.Text
+        EditBOX.Text = EditBOX.Text.Replace("$NEWLINE", vbNewLine)
 
         ''http://dobon.net/vb/dotnet/system/modifierkeys.html
 
@@ -555,25 +425,31 @@ Public Class frmNowplayingEditor
 
             If myIDX <> -1 Then
                 If MessageBox.Show("以下のデータをリストから削除しますか？" + vbNewLine + vbNewLine + ComboBoxEditStr.Text, "確認", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
-                    ComboBoxEditStr.Items.RemoveAt(myIDX)  ''◆Ctrlキーを押しながら、リストをクリックする → 削除
+                    ComboBoxEditStr.Items.RemoveAt(myIDX)  ''【隠し機能】Ctrlキーを押しながら、リストをクリックする → 削除
                     writeEditData()
                 End If
             End If
         End If
     End Sub
 
-    Private Sub ComboBoxEditStr_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles ComboBoxEditStr.KeyDown
-        ''■2013.02.09 関数ごと追加
-        ''http://dobon.net/vb/dotnet/control/keyevent.html
+    Private Sub EditBOX_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles EditBOX.KeyDown
+        LastSelectionStart = EditBOX.SelectionStart
+        LastSelectionLength = EditBOX.SelectionLength
 
-        'ControlキーとEnterが押された時
-        If (Control.ModifierKeys And Keys.Control) Then
-            If (e.KeyCode = Keys.Enter) Then
-                ''MessageBox.Show("ControlキーとEnterが押されました。", "確認", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-                InsertStrIntoComboBox("$NEWLINE")
-            End If
-        End If
+        ListChangeFlg = False
     End Sub
 End Class
 
-''もし可能なら、なうぷれTunesリリース前に、チェックさせて下さいm(_ _)m  いつもお手数かけてすみません（>_<"）
+''その他参考サイト
+''http://blog.livedoor.jp/akf0/archives/51315453.html#more 右クリックメニュー
+
+''http://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q1331025278
+''http://dobon.net/vb/dotnet/control/showtooltip.html
+''http://blogs.yahoo.co.jp/schmitt_jun/14588949.html
+''http://natchan-develop.seesaa.net/article/17967829.html
+''http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=9634&forum=7
+''http://www.geocities.jp/hatanero/indexer.html
+''http://natchan-develop.seesaa.net/archives/200605-1.html
+''http://dobon.net/vb/dotnet/control/index.html
+''http://shinshu.fm/MHz/88.44/a11462/
+''http://www3.plala.or.jp/sardonyx/smart/vb/index.html
