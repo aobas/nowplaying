@@ -352,7 +352,7 @@ Public Class Form1
             setting.CheckForUpdate = CheckBox4.Checked
             setting.ShowUpdate = CheckBox5.Checked
             setting.SendOnEnterKey = CheckBox6.Checked
-            setting.TweetIntervelEnabled = CheckBox7.Enabled
+            setting.TweetIntervelEnabled = CheckBox7.Checked
             setting.TweetInterval = NumericUpDown2.Value
 
             AppSettingNow = setting
