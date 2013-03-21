@@ -492,9 +492,9 @@ Partial Class Form1
         Me.Label5.AutoSize = True
         Me.Label5.Location = New System.Drawing.Point(4, 5)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(150, 36)
+        Me.Label5.Size = New System.Drawing.Size(151, 36)
         Me.Label5.TabIndex = 1
-        Me.Label5.Text = "なうぷれTunes(Version1.3.6)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "開発コードネーム:Natuki" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "制作:大石一稀(Oishi Kazuki)"
+        Me.Label5.Text = "なうぷれTunes(Version1.3.6.1)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "開発コードネーム:Natuki" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "制作:大石一稀(Oishi Kazuki)"
         '
         'Panel2
         '
